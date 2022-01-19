@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/react-striker-app/static/css/main.964fdded.css",
-    "main.js": "/react-striker-app/static/js/main.efc64ea8.js",
+    "main.js": "/react-striker-app/static/js/main.d6420215.js",
     "static/js/787.f615ccb7.chunk.js": "/react-striker-app/static/js/787.f615ccb7.chunk.js",
     "index.html": "/react-striker-app/index.html",
     "static/media/cancel-strike.svg": "/react-striker-app/static/media/cancel-strike.270e56fbcd284cc1f94e787dd9e6bd91.svg",
     "static/media/check-strike.svg": "/react-striker-app/static/media/check-strike.d6ecb75057a8367035c767de4b44e62d.svg",
     "main.964fdded.css.map": "/react-striker-app/static/css/main.964fdded.css.map",
-    "main.efc64ea8.js.map": "/react-striker-app/static/js/main.efc64ea8.js.map",
+    "main.d6420215.js.map": "/react-striker-app/static/js/main.d6420215.js.map",
     "787.f615ccb7.chunk.js.map": "/react-striker-app/static/js/787.f615ccb7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.964fdded.css",
-    "static/js/main.efc64ea8.js"
+    "static/js/main.d6420215.js"
   ]
 }
