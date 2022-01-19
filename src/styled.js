@@ -25,9 +25,10 @@ export const Percent = styled.span`
 `
 export const CardContainer = styled.div`
       // border: 2px dashed red;
-      width: 100vw;
+      // width: 100vw;
       display: grid;
       grid-template-columns: repeat(3, auto);
+      gap: 25px;
       overflow-y: auto;
       justify-content: center;
       margin-top: 70px;
@@ -41,11 +42,20 @@ export const CardContainer = styled.div`
       }
 `
 export const DayCard = styled.div`
+`
+export const CardWrapper = styled.div`
       width: 150px;
-      margin: 0 15px;
       border: 1px solid #CED4DA;
       border-radius: 4px;
       padding: 30px 20px;
+`
+export const Motiv = styled.p`
+      margin: 0;
+      margin-bottom: 10px;
+      padding:0;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
 `
 export const DateText = styled.p`
       margin: 0;

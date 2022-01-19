@@ -11,6 +11,8 @@ import {
   Strike,
   CardContainer,
   DayCard,
+  Motiv,
+  CardWrapper,
   DateText,
   Day,
   Actions,
@@ -23,6 +25,7 @@ function App() {
   const [strikeData, setStrikeData] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
+    // setIsLoading(true)
     fetch("https://vineet-striker-app.herokuapp.com/mystrike", {
       method: "GET",
       headers: {
@@ -30,8 +33,14 @@ function App() {
       },
     })
       .then((res) => res.json())
-      .then((jsonres) => setStrikeData(jsonres))
-      .catch((err) => console.log(err));
+      .then((jsonres) => {
+        setStrikeData(jsonres)
+        // setIsLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        // setIsLoading(false)
+      });
   }, []);
 
   const handleAction = (hit) => {
@@ -60,6 +69,65 @@ function App() {
       setIsLoading(false)
     });
   };
+
+  const previousDayCard = () => {
+    if(strikeData?.last_strike===null){
+      if(strikeData?.current_strike!==null){
+        return (
+          <DayCard>
+            <Motiv>{strikeData?.last_strike?.hit ? "Wooo!!..There is no stopping" : "It's okay, keep going..."}</Motiv>
+            <CardWrapper>
+              <DateText>
+                {format(new Date(strikeData?.current_strike?.date), "MMM d, yyyy") ||
+                  "--"}
+              </DateText>
+              <Day>
+                {format(new Date(strikeData?.current_strike?.date), "EEEE") || "--"}
+              </Day>
+              <Actions>{strikeData?.current_strike?.hit ? (
+                <ActionButton disabled={true}>
+                  <img src={Check} />
+                </ActionButton>
+                ) : (
+                  <ActionButton disabled={true}>
+                    <img src={Cross} />
+                  </ActionButton>
+                )}
+              </Actions>
+            </CardWrapper>
+          </DayCard>
+        )
+      }
+      else {
+        return null
+      }
+    } else {
+      return (
+        <DayCard>
+          <Motiv>{strikeData?.last_strike?.hit ? "Wooo!!..There is no stopping" : "It's okay, keep going..."}</Motiv>
+          <CardWrapper>
+            <DateText>
+              {format(new Date(strikeData?.last_strike?.date), "MMM d, yyyy") ||
+                "--"}
+            </DateText>
+            <Day>
+              {format(new Date(strikeData?.last_strike?.date), "EEEE") || "--"}
+            </Day>
+            <Actions>{strikeData?.last_strike?.hit ? (
+              <ActionButton disabled={true}>
+                <img src={Check} />
+              </ActionButton>
+              ) : (
+                <ActionButton disabled={true}>
+                  <img src={Cross} />
+                </ActionButton>
+              )}
+            </Actions>
+          </CardWrapper>
+        </DayCard>
+      )
+    }
+  }
   return (
     <div className="App">
       {isLoading && 
@@ -74,50 +142,38 @@ function App() {
         {strikeData?.total ? Math.round((strikeData.strike/strikeData.total)*100) : 0}<Percent>%</Percent>
       </Strike>
       <CardContainer>
-        {strikeData !== null && strikeData.last_strike !== null ? (
-          <DayCard>
-            <DateText>
-              {format(new Date(strikeData?.last_strike?.date), "MMM d, yyyy") ||
-                "--"}
-            </DateText>
-            <Day>
-              {format(new Date(strikeData?.last_strike?.date), "EEEE") || "--"}
-            </Day>
+        {previousDayCard()}
+        <DayCard>
+          <Motiv>Make the best of today.!</Motiv>
+          <CardWrapper>
+            <DateText>{format(new Date(), "MMM d, yyyy") || "--"}</DateText>
+            <Day>{format(new Date(), "EEEE") || "--"}</Day>
             <Actions>
-              <ActionButton>
+              <ActionButton onClick={() => handleAction(false)}>
                 <img src={Cross} />
               </ActionButton>
-              <ActionButton>
+              <ActionButton onClick={() => handleAction(true)}>
                 <img src={Check} />
               </ActionButton>
             </Actions>
-          </DayCard>
-        ) : null}
-        <DayCard>
-          <DateText>{format(new Date(), "MMM d, yyyy") || "--"}</DateText>
-          <Day>{format(new Date(), "EEEE") || "--"}</Day>
-          <Actions>
-            <ActionButton onClick={() => handleAction(false)}>
-              <img src={Cross} />
-            </ActionButton>
-            <ActionButton onClick={() => handleAction(true)}>
-              <img src={Check} />
-            </ActionButton>
-          </Actions>
+          </CardWrapper>
         </DayCard>
         <DayCard>
-          <DateText>
-            {format(addDays(new Date(), 1), "MMM d, yyyy") || "--"}
-          </DateText>
-          <Day>{format(addDays(new Date(), 1), "EEEE") || "--"}</Day>
-          <Actions>
-            <ActionButton>
-              <img src={Cross} />
-            </ActionButton>
-            <ActionButton>
-              <img src={Check} />
-            </ActionButton>
-          </Actions>
+          <Motiv>...and tomorrow..!!</Motiv>
+          <CardWrapper>
+            <DateText>
+              {format(addDays(new Date(), 1), "MMM d, yyyy") || "--"}
+            </DateText>
+            <Day>{format(addDays(new Date(), 1), "EEEE") || "--"}</Day>
+            <Actions>
+              <ActionButton disabled={true}>
+                <img src={Cross} />
+              </ActionButton>
+              <ActionButton disabled={true}>
+                <img src={Check} />
+              </ActionButton>
+            </Actions>
+          </CardWrapper>
         </DayCard>
       </CardContainer>
     </div>
