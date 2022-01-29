@@ -7,6 +7,7 @@ import Cross from "./assets/cancel-strike.svg";
 
 import {
   Title,
+  Snackbar,
   Percent,
   Strike,
   CardContainer,
@@ -24,6 +25,7 @@ import {
 function App() {
   const [strikeData, setStrikeData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("Some random text here...");
 
   const getFullDate = (date) => {
     return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
@@ -34,6 +36,15 @@ function App() {
       return true
     else
       return false
+  }
+
+  const showSnackbar = () => {
+    var x = document.getElementById("snackbar");
+
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
   }
 
   useEffect(() => {
@@ -66,6 +77,8 @@ function App() {
       date: new Date().toISOString()
     }
 
+    setSnackbarText(hit ? "Great🎉...Keep going..!!" : "Ohh that's okay...It's a journey 💖")
+
     fetch("https://vineet-striker-app.herokuapp.com/mystrike", {
       method: "PATCH",
       headers: headersList,
@@ -75,6 +88,7 @@ function App() {
     .then((jsonres) => {
       setStrikeData(jsonres)
       setIsLoading(false)
+      showSnackbar()
     })
     .catch((err) => {
       console.log(err)
@@ -87,7 +101,7 @@ function App() {
       if(strikeData?.current_strike!==null){
         return (
           <DayCard>
-            <Motiv>{strikeData?.current_strike?.hit ? "Wooo!!..There is no stopping" : "It's okay, keep going..."}</Motiv>
+            <Motiv>{strikeData?.current_strike?.hit ? "Wooo!!..There is no stopping" : "Certainly not the end"}</Motiv>
             <CardWrapper>
               <DateText>
                 {format(new Date(strikeData?.current_strike?.date), "MMM d, yyyy") ||
@@ -116,7 +130,7 @@ function App() {
     } else {
       return (
         <DayCard>
-          <Motiv>{strikeData?.last_strike?.hit ? "Wooo!!..There is no stopping" : "It's okay, keep going..."}</Motiv>
+          <Motiv>{strikeData?.last_strike?.hit ? "Wooo!!..There is no stopping" : "Certainly not the end"}</Motiv>
           <CardWrapper>
             <DateText>
               {format(new Date(strikeData?.last_strike?.date), "MMM d, yyyy") ||
@@ -142,6 +156,7 @@ function App() {
   }
   return (
     <div className="App">
+      <Snackbar id="snackbar">{snackbarText}</Snackbar>
       {isLoading && 
         <>
           <LoaderContainer>
@@ -149,7 +164,7 @@ function App() {
           <Loader></Loader>
         </>
       }
-      <Title>Striker</Title>
+      <Title>STRIKER</Title>
       <Strike>
         {strikeData?.total ? Math.round((strikeData.strike/strikeData.total)*100) : 0}<Percent>%</Percent>
       </Strike>
@@ -161,20 +176,36 @@ function App() {
             <DateText>{format(new Date(), "MMM d, yyyy") || "--"}</DateText>
             <Day>{format(new Date(), "EEEE") || "--"}</Day>
             <Actions>
-              <ActionButton 
-                disabled={isTodayHit()} 
-                onClick={() => handleAction(false)}
-                style={{cursor:!isTodayHit() ? "not-allowed" : "auto"}}
-              >
-                <img alt="cross icon" src={Cross} />
-              </ActionButton>
-              <ActionButton 
-                disabled={!isTodayHit()} 
-                onClick={() => handleAction(true)}
-                style={{cursor:isTodayHit() ? "not-allowed" : "auto"}}
-              >
-                <img alt="check icon" src={Check} />
-              </ActionButton>
+              {getFullDate(new Date(strikeData?.current_strike?.date))===getFullDate(new Date()) ? (
+                isTodayHit ? (<ActionButton 
+                  disabled={true} 
+                >
+                  <img alt="check icon" src={Check} />
+                </ActionButton>) : (
+                  <ActionButton 
+                    disabled={true} 
+                  >
+                    <img alt="cross icon" src={Cross} />
+                  </ActionButton>
+                )
+              ) : (
+                <>
+                  <ActionButton 
+                    disabled={isTodayHit()} 
+                    onClick={() => handleAction(false)}
+                    style={{cursor:!isTodayHit() ? "not-allowed" : "auto"}}
+                  >
+                    <img alt="cross icon" src={Cross} />
+                  </ActionButton>
+                  <ActionButton 
+                    disabled={!isTodayHit()} 
+                    onClick={() => handleAction(true)}
+                    style={{cursor:isTodayHit() ? "not-allowed" : "auto"}}
+                  >
+                    <img alt="check icon" src={Check} />
+                  </ActionButton>
+                </>
+              )}
             </Actions>
           </CardWrapper>
         </DayCard>
@@ -186,10 +217,10 @@ function App() {
             </DateText>
             <Day>{format(addDays(new Date(), 1), "EEEE") || "--"}</Day>
             <Actions>
-              <ActionButton disabled={true}>
+              <ActionButton>
                 <img alt="cross icon" src={Cross} />
               </ActionButton>
-              <ActionButton disabled={true}>
+              <ActionButton>
                 <img alt="check icon" src={Check} />
               </ActionButton>
             </Actions>

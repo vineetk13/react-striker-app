@@ -6,7 +6,9 @@ export const Title = styled.h2`
       letter-spacing: 0.05em;
       font-size:50px;
 `
-
+export const Snackbar = styled.div`
+      
+`
 export const Strike = styled.p`
       margin:0;
       padding:0;
@@ -69,7 +71,7 @@ export const Day = styled.p`
       margin-top: 10px;
       margin-bottom: 25px;
       font-family: 'Inter', sans-serif;
-      font-size: 24px;
+      font-size: 22px;
 `
 export const Actions = styled.div``
 export const ActionButton = styled.button`
