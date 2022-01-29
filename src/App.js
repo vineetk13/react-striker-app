@@ -38,6 +38,11 @@ function App() {
       return false
   }
 
+  const isToday = (date) => {
+    return getFullDate(new Date(date))===getFullDate(new Date())
+  }
+
+
   const showSnackbar = () => {
     var x = document.getElementById("snackbar");
 
@@ -170,14 +175,15 @@ function App() {
       </Strike>
       <CardContainer>
         {strikeData !== null && previousDayCard()}
+        {strikeData?.last_strike===null && isToday(strikeData?.current_strike?.date) ? null :
         <DayCard>
           <Motiv>Make the best of today.!</Motiv>
           <CardWrapper>
             <DateText>{format(new Date(), "MMM d, yyyy") || "--"}</DateText>
             <Day>{format(new Date(), "EEEE") || "--"}</Day>
             <Actions>
-              {getFullDate(new Date(strikeData?.current_strike?.date))===getFullDate(new Date()) ? (
-                isTodayHit ? (<ActionButton 
+              {strikeData?.last_strike!==null && isToday(strikeData?.current_strike?.date) ? (
+                isTodayHit() ? (<ActionButton 
                   disabled={true} 
                 >
                   <img alt="check icon" src={Check} />
@@ -204,9 +210,9 @@ function App() {
               )}
             </Actions>
           </CardWrapper>
-        </DayCard>
+        </DayCard>}
         <DayCard>
-          <Motiv>...and tomorrow..!!</Motiv>
+          <Motiv>Ready for tomorrow?</Motiv>
           <CardWrapper>
             <DateText>
               {format(addDays(new Date(), 1), "MMM d, yyyy") || "--"}
