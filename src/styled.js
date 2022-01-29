@@ -79,6 +79,9 @@ export const ActionButton = styled.button`
       cursor:pointer;
       margin: 0 8px;
       outline: none;
+      &:disabled {
+            opacity: .6
+      }
 `
 const spin = keyframes`
       0% { transform: rotate(0deg); }

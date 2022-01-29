@@ -23,7 +23,19 @@ import {
 
 function App() {
   const [strikeData, setStrikeData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getFullDate = (date) => {
+    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+  }
+
+  const isTodayHit = () => {
+    if(getFullDate(new Date(strikeData?.current_strike?.date))===getFullDate(new Date()) && strikeData?.current_strike?.hit)
+      return true
+    else
+      return false
+  }
+
   useEffect(() => {
     setIsLoading(true)
     fetch("https://vineet-striker-app.herokuapp.com/mystrike", {
@@ -149,10 +161,18 @@ function App() {
             <DateText>{format(new Date(), "MMM d, yyyy") || "--"}</DateText>
             <Day>{format(new Date(), "EEEE") || "--"}</Day>
             <Actions>
-              <ActionButton onClick={() => handleAction(false)}>
+              <ActionButton 
+                disabled={isTodayHit()} 
+                onClick={() => handleAction(false)}
+                style={{cursor:!isTodayHit() ? "not-allowed" : "auto"}}
+              >
                 <img alt="cross icon" src={Cross} />
               </ActionButton>
-              <ActionButton onClick={() => handleAction(true)}>
+              <ActionButton 
+                disabled={!isTodayHit()} 
+                onClick={() => handleAction(true)}
+                style={{cursor:isTodayHit() ? "not-allowed" : "auto"}}
+              >
                 <img alt="check icon" src={Check} />
               </ActionButton>
             </Actions>
