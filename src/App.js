@@ -25,7 +25,7 @@ function App() {
   const [strikeData, setStrikeData] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
-    // setIsLoading(true)
+    setIsLoading(true)
     fetch("https://vineet-striker-app.herokuapp.com/mystrike", {
       method: "GET",
       headers: {
@@ -35,11 +35,11 @@ function App() {
       .then((res) => res.json())
       .then((jsonres) => {
         setStrikeData(jsonres)
-        // setIsLoading(false)
+        setIsLoading(false)
       })
       .catch((err) => {
         console.log(err)
-        // setIsLoading(false)
+        setIsLoading(false)
       });
   }, []);
 
