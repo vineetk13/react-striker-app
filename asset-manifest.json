@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/react-striker-app/static/css/main.964fdded.css",
-    "main.js": "/react-striker-app/static/js/main.2c068875.js",
+    "main.js": "/react-striker-app/static/js/main.c90b4a33.js",
     "index.html": "/react-striker-app/index.html",
     "static/media/cancel-strike.svg": "/react-striker-app/static/media/cancel-strike.270e56fbcd284cc1f94e787dd9e6bd91.svg",
     "static/media/check-strike.svg": "/react-striker-app/static/media/check-strike.d6ecb75057a8367035c767de4b44e62d.svg",
     "main.964fdded.css.map": "/react-striker-app/static/css/main.964fdded.css.map",
-    "main.2c068875.js.map": "/react-striker-app/static/js/main.2c068875.js.map"
+    "main.c90b4a33.js.map": "/react-striker-app/static/js/main.c90b4a33.js.map"
   },
   "entrypoints": [
     "static/css/main.964fdded.css",
-    "static/js/main.2c068875.js"
+    "static/js/main.c90b4a33.js"
   ]
 }
