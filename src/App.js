@@ -75,7 +75,7 @@ function App() {
       if(strikeData?.current_strike!==null){
         return (
           <DayCard>
-            <Motiv>{strikeData?.last_strike?.hit ? "Wooo!!..There is no stopping" : "It's okay, keep going..."}</Motiv>
+            <Motiv>{strikeData?.current_strike?.hit ? "Wooo!!..There is no stopping" : "It's okay, keep going..."}</Motiv>
             <CardWrapper>
               <DateText>
                 {format(new Date(strikeData?.current_strike?.date), "MMM d, yyyy") ||
@@ -86,11 +86,11 @@ function App() {
               </Day>
               <Actions>{strikeData?.current_strike?.hit ? (
                 <ActionButton disabled={true}>
-                  <img src={Check} />
+                  <img alt="check icon" src={Check} />
                 </ActionButton>
                 ) : (
                   <ActionButton disabled={true}>
-                    <img src={Cross} />
+                    <img alt="cross icon" src={Cross} />
                   </ActionButton>
                 )}
               </Actions>
@@ -115,11 +115,11 @@ function App() {
             </Day>
             <Actions>{strikeData?.last_strike?.hit ? (
               <ActionButton disabled={true}>
-                <img src={Check} />
+                <img alt="check icon" src={Check} />
               </ActionButton>
               ) : (
                 <ActionButton disabled={true}>
-                  <img src={Cross} />
+                  <img alt="cross icon" src={Cross} />
                 </ActionButton>
               )}
             </Actions>
@@ -142,7 +142,7 @@ function App() {
         {strikeData?.total ? Math.round((strikeData.strike/strikeData.total)*100) : 0}<Percent>%</Percent>
       </Strike>
       <CardContainer>
-        {previousDayCard()}
+        {strikeData !== null && previousDayCard()}
         <DayCard>
           <Motiv>Make the best of today.!</Motiv>
           <CardWrapper>
@@ -150,10 +150,10 @@ function App() {
             <Day>{format(new Date(), "EEEE") || "--"}</Day>
             <Actions>
               <ActionButton onClick={() => handleAction(false)}>
-                <img src={Cross} />
+                <img alt="cross icon" src={Cross} />
               </ActionButton>
               <ActionButton onClick={() => handleAction(true)}>
-                <img src={Check} />
+                <img alt="check icon" src={Check} />
               </ActionButton>
             </Actions>
           </CardWrapper>
@@ -167,10 +167,10 @@ function App() {
             <Day>{format(addDays(new Date(), 1), "EEEE") || "--"}</Day>
             <Actions>
               <ActionButton disabled={true}>
-                <img src={Cross} />
+                <img alt="cross icon" src={Cross} />
               </ActionButton>
               <ActionButton disabled={true}>
-                <img src={Check} />
+                <img alt="check icon" src={Check} />
               </ActionButton>
             </Actions>
           </CardWrapper>
