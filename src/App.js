@@ -191,16 +191,12 @@ function App() {
               ) : (
                 <>
                   <ActionButton 
-                    disabled={isTodayHit()} 
                     onClick={() => handleAction(false)}
-                    style={{cursor:!isTodayHit() ? "not-allowed" : "auto"}}
                   >
                     <img alt="cross icon" src={Cross} />
                   </ActionButton>
                   <ActionButton 
-                    disabled={!isTodayHit()} 
                     onClick={() => handleAction(true)}
-                    style={{cursor:isTodayHit() ? "not-allowed" : "auto"}}
                   >
                     <img alt="check icon" src={Check} />
                   </ActionButton>
